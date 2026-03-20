@@ -12,7 +12,6 @@ body {
     text-align:center;
 }
 
-/* Navbar */
 nav {
     background:#2c3e50;
     padding:15px;
@@ -23,18 +22,13 @@ nav a {
     text-decoration:none;
     font-weight:bold;
 }
-nav a:hover {
-    color:#1abc9c;
-}
 
-/* Header */
 header {
     color:white;
     padding:40px;
     font-size:28px;
 }
 
-/* Cards */
 .card {
     background:white;
     margin:20px auto;
@@ -44,7 +38,6 @@ header {
     box-shadow:0 4px 10px rgba(0,0,0,0.2);
 }
 
-/* Buttons */
 button {
     padding:10px 20px;
     border:none;
@@ -53,11 +46,7 @@ button {
     color:white;
     cursor:pointer;
 }
-button:hover {
-    background:#27ae60;
-}
 
-/* Inputs */
 input, textarea {
     width:80%;
     padding:10px;
@@ -66,12 +55,10 @@ input, textarea {
     border:1px solid #ccc;
 }
 
-/* Canvas */
 canvas {
     border:2px solid black;
 }
 
-/* Footer */
 footer {
     background:#2c3e50;
     color:white;
@@ -82,7 +69,6 @@ footer {
 
 <body>
 
-<!-- Navbar -->
 <nav>
 <a href="#tips">Tips</a>
 <a href="#relax">Relax</a>
@@ -90,36 +76,29 @@ footer {
 <a href="#contact">Contact</a>
 </nav>
 
-<!-- Header -->
 <header>
 🌿 Student Stress Management
 </header>
 
-<!-- Tips -->
 <div class="card" id="tips">
 <h2>📘 Stress Management Tips</h2>
-<p>✔ Take short breaks during study</p>
-<p>✔ Maintain a daily schedule</p>
+<p>✔ Take breaks</p>
+<p>✔ Stay organized</p>
 <p>✔ Exercise regularly</p>
-<p>✔ Stay positive and avoid overthinking</p>
 </div>
 
-<!-- Relax -->
 <div class="card" id="relax">
 <h2>🧘 Relax Zone</h2>
-<p>Click to play calming music</p>
-
-<button onclick="playMusic(1)">Relax Sound 1 🎵</button>
-<button onclick="playMusic(2)">Relax Sound 2 🎵</button>
-<button onclick="stopMusic()">Stop ⏹</button>
+<button onclick="playMusic(1)">Sound 1</button>
+<button onclick="playMusic(2)">Sound 2</button>
+<button onclick="stopMusic()">Stop</button>
 
 <audio id="m1" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
 <audio id="m2" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"></audio>
 </div>
 
-<!-- Drawing -->
 <div class="card" id="draw">
-<h2>🎨 Draw & Relax</h2>
+<h2>🎨 Drawing Board</h2>
 
 <input type="color" id="colorPicker">
 <input type="range" id="size" min="1" max="10" value="3">
@@ -130,7 +109,6 @@ footer {
 <button onclick="clearCanvas()">Clear</button>
 </div>
 
-<!-- Contact -->
 <div class="card" id="contact">
 <h2>📩 Contact</h2>
 <input id="name" placeholder="Your Name"><br>
@@ -138,7 +116,6 @@ footer {
 <button onclick="sendMail()">Send</button>
 </div>
 
-<!-- Footer -->
 <footer>
 Made with ❤️ by Srilatha
 </footer>
@@ -154,23 +131,35 @@ function stopMusic(){
     document.getElementById("m2").pause();
 }
 
-// 🎨 Drawing
-const canvas=document.getElementById("canvas");
-const ctx=canvas.getContext("2d");
-let drawing=false;
+// 🎨 Drawing (FIXED)
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
 
-canvas.addEventListener("mousedown",()=>drawing=true);
-canvas.addEventListener("mouseup",()=>drawing=false);
-canvas.addEventListener("mousemove",draw);
+let drawing = false;
+
+canvas.addEventListener("mousedown", startDraw);
+canvas.addEventListener("mouseup", stopDraw);
+canvas.addEventListener("mousemove", draw);
+
+function startDraw(e){
+    drawing = true;
+    ctx.beginPath();
+    ctx.moveTo(e.offsetX, e.offsetY);
+}
+
+function stopDraw(){
+    drawing = false;
+}
 
 function draw(e){
     if(!drawing) return;
-    ctx.strokeStyle=document.getElementById("colorPicker").value;
-    ctx.lineWidth=document.getElementById("size").value;
-    ctx.lineTo(e.offsetX,e.offsetY);
+
+    ctx.strokeStyle = document.getElementById("colorPicker").value;
+    ctx.lineWidth = document.getElementById("size").value;
+    ctx.lineCap = "round";
+
+    ctx.lineTo(e.offsetX, e.offsetY);
     ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(e.offsetX,e.offsetY);
 }
 
 function clearCanvas(){
