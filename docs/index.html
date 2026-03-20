@@ -8,35 +8,24 @@
             margin: 0;
             font-family: 'Segoe UI', sans-serif;
             background: linear-gradient(to right, #74ebd5, #ACB6E5);
+            text-align: center;
         }
 
         nav {
             background: #2c3e50;
             padding: 15px;
-            text-align: center;
         }
         nav a {
             color: white;
-            margin: 15px;
+            margin: 10px;
             text-decoration: none;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-        nav a:hover {
-            color: #1abc9c;
         }
 
         header {
-            text-align: center;
-            padding: 40px;
             color: white;
-            font-size: 30px;
+            padding: 30px;
+            font-size: 28px;
             animation: fadeIn 2s;
-        }
-
-        .container {
-            padding: 20px;
-            text-align: center;
         }
 
         .card {
@@ -46,16 +35,11 @@
             border-radius: 15px;
             width: 80%;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            transition: transform 0.3s;
             animation: slideUp 1s;
         }
 
-        .card:hover {
-            transform: scale(1.05);
-        }
-
         button {
-            padding: 10px 20px;
+            padding: 10px;
             border: none;
             border-radius: 8px;
             background: #2ecc71;
@@ -63,14 +47,16 @@
             cursor: pointer;
         }
 
+        canvas {
+            border: 2px solid black;
+        }
+
         footer {
             background: #2c3e50;
             color: white;
-            text-align: center;
             padding: 10px;
         }
 
-        /* Animations */
         @keyframes fadeIn {
             from {opacity: 0;}
             to {opacity: 1;}
@@ -94,21 +80,29 @@
     🌿 Student Stress Management
 </header>
 
-<div class="container">
+<div class="card" id="tips">
+    <h2>📘 Tips</h2>
+    <p>✔ Take breaks</p>
+    <p>✔ Stay organized</p>
+    <p>✔ Exercise regularly</p>
+</div>
 
-    <div id="tips" class="card">
-        <h2>📘 Stress Relief Tips</h2>
-        <p>✔ Take breaks</p>
-        <p>✔ Stay organized</p>
-        <p>✔ Exercise</p>
-    </div>
+<div class="card" id="relax">
+    <h2>🧘 Relax</h2>
+    <button onclick="playMusic()">Play Music 🎵</button>
+    <audio id="music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+</div>
 
-    <div id="relax" class="card">
-        <h2>🧘 Relax Zone</h2>
-        <button onclick="playMusic()">Play Music 🎵</button>
-        <audio id="music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
-    </div>
+<div class="card">
+    <h2>🎨 Draw & Relax</h2>
+    <canvas id="draw" width="300" height="300"></canvas><br><br>
+    <button onclick="clearCanvas()">Clear</button>
+</div>
 
+<div class="card">
+    <h2>🎮 Mini Game</h2>
+    <p>Score: <span id="score">0</span></p>
+    <button onclick="increaseScore()">Click Me!</button>
 </div>
 
 <footer>
@@ -118,6 +112,31 @@
 <script>
 function playMusic() {
     document.getElementById("music").play();
+}
+
+// Drawing
+const canvas = document.getElementById("draw");
+const ctx = canvas.getContext("2d");
+let drawing = false;
+
+canvas.addEventListener("mousedown", () => drawing = true);
+canvas.addEventListener("mouseup", () => drawing = false);
+canvas.addEventListener("mousemove", draw);
+
+function draw(e) {
+    if (!drawing) return;
+    ctx.fillRect(e.offsetX, e.offsetY, 2, 2);
+}
+
+function clearCanvas() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+// Game
+let score = 0;
+function increaseScore() {
+    score++;
+    document.getElementById("score").innerText = score;
 }
 </script>
 
