@@ -1,216 +1,187 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Student Stress Management</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Stress Management</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<style>
+body {
+    margin:0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to right,#74ebd5,#ACB6E5);
+    text-align:center;
+}
 
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #74ebd5, #ACB6E5);
-            scroll-behavior: smooth;
-        }
+/* Navbar */
+nav {
+    background:#2c3e50;
+    padding:15px;
+}
+nav a {
+    color:white;
+    margin:10px;
+    text-decoration:none;
+    font-weight:bold;
+}
+nav a:hover {
+    color:#1abc9c;
+}
 
-        nav {
-            background: #1e272e;
-            padding: 15px;
-            position: sticky;
-            top: 0;
-            text-align: center;
-        }
+/* Header */
+header {
+    color:white;
+    padding:40px;
+    font-size:28px;
+}
 
-        nav a {
-            color: white;
-            margin: 10px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: 0.3s;
-        }
+/* Cards */
+.card {
+    background:white;
+    margin:20px auto;
+    padding:20px;
+    width:85%;
+    border-radius:15px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
 
-        nav a:hover {
-            color: #00cec9;
-        }
+/* Buttons */
+button {
+    padding:10px 20px;
+    border:none;
+    border-radius:8px;
+    background:#2ecc71;
+    color:white;
+    cursor:pointer;
+}
+button:hover {
+    background:#27ae60;
+}
 
-        header {
-            text-align: center;
-            padding: 50px;
-            color: white;
-            font-size: 32px;
-            animation: fadeIn 2s;
-        }
+/* Inputs */
+input, textarea {
+    width:80%;
+    padding:10px;
+    margin:8px;
+    border-radius:8px;
+    border:1px solid #ccc;
+}
 
-        .card {
-            background: white;
-            margin: 20px auto;
-            padding: 25px;
-            border-radius: 15px;
-            width: 85%;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-            animation: slideUp 1s;
-            transition: 0.3s;
-        }
+/* Canvas */
+canvas {
+    border:2px solid black;
+}
 
-        .card:hover {
-            transform: translateY(-5px) scale(1.02);
-        }
-
-        h2 {
-            margin-bottom: 10px;
-        }
-
-        button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            background: #00b894;
-            color: white;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        button:hover {
-            background: #019875;
-        }
-
-        input, textarea {
-            width: 80%;
-            padding: 10px;
-            margin: 8px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-        }
-
-        canvas {
-            border: 2px solid #333;
-            margin-top: 10px;
-        }
-
-        footer {
-            background: #1e272e;
-            color: white;
-            text-align: center;
-            padding: 10px;
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from {opacity: 0;}
-            to {opacity: 1;}
-        }
-
-        @keyframes slideUp {
-            from {transform: translateY(40px); opacity: 0;}
-            to {transform: translateY(0); opacity: 1;}
-        }
-    </style>
+/* Footer */
+footer {
+    background:#2c3e50;
+    color:white;
+    padding:10px;
+}
+</style>
 </head>
 
 <body>
 
+<!-- Navbar -->
 <nav>
-    <a href="#">Home</a>
-    <a href="#tips">Tips</a>
-    <a href="#relax">Relax</a>
-    <a href="#draw">Draw</a>
-    <a href="#game">Game</a>
-    <a href="#contact">Contact</a>
+<a href="#tips">Tips</a>
+<a href="#relax">Relax</a>
+<a href="#draw">Draw</a>
+<a href="#contact">Contact</a>
 </nav>
 
+<!-- Header -->
 <header>
-    🌿 Student Stress Management
+🌿 Student Stress Management
 </header>
 
+<!-- Tips -->
 <div class="card" id="tips">
-    <h2>📘 Stress Relief Tips</h2>
-    <p>✔ Take breaks regularly</p>
-    <p>✔ Stay organized with a schedule</p>
-    <p>✔ Exercise and stay active</p>
+<h2>📘 Stress Management Tips</h2>
+<p>✔ Take short breaks during study</p>
+<p>✔ Maintain a daily schedule</p>
+<p>✔ Exercise regularly</p>
+<p>✔ Stay positive and avoid overthinking</p>
 </div>
 
+<!-- Relax -->
 <div class="card" id="relax">
-    <h2>🧘 Relax Zone</h2>
-    <button onclick="playMusic()">Play Music 🎵</button>
-    <button onclick="stopMusic()">Stop ⏹</button>
-    <audio id="music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+<h2>🧘 Relax Zone</h2>
+<p>Click to play calming music</p>
+
+<button onclick="playMusic(1)">Relax Sound 1 🎵</button>
+<button onclick="playMusic(2)">Relax Sound 2 🎵</button>
+<button onclick="stopMusic()">Stop ⏹</button>
+
+<audio id="m1" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+<audio id="m2" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"></audio>
 </div>
 
+<!-- Drawing -->
 <div class="card" id="draw">
-    <h2>🎨 Drawing Board</h2>
-    <canvas id="canvas" width="300" height="300"></canvas><br>
-    <button onclick="clearCanvas()">Clear</button>
+<h2>🎨 Draw & Relax</h2>
+
+<input type="color" id="colorPicker">
+<input type="range" id="size" min="1" max="10" value="3">
+
+<br><br>
+
+<canvas id="canvas" width="300" height="300"></canvas><br><br>
+<button onclick="clearCanvas()">Clear</button>
 </div>
 
-<div class="card" id="game">
-    <h2>🎮 Click Game</h2>
-    <p>Score: <span id="score">0</span></p>
-    <button onclick="increaseScore()">Click Me Fast!</button>
-</div>
-
+<!-- Contact -->
 <div class="card" id="contact">
-    <h2>📩 Contact</h2>
-    <input type="text" placeholder="Your Name"><br>
-    <input type="email" placeholder="Your Email"><br>
-    <textarea placeholder="Your Message"></textarea><br>
-    <button onclick="sendMessage()">Send</button>
-    <p id="msg"></p>
+<h2>📩 Contact</h2>
+<input id="name" placeholder="Your Name"><br>
+<textarea id="msg" placeholder="Your Message"></textarea><br>
+<button onclick="sendMail()">Send</button>
 </div>
 
+<!-- Footer -->
 <footer>
-    Made with ❤️ by Srilatha
+Made with ❤️ by Srilatha
 </footer>
 
 <script>
 // 🎵 Music
-function playMusic() {
-    document.getElementById("music").play();
+function playMusic(n){
+    stopMusic();
+    document.getElementById("m"+n).play();
 }
-function stopMusic() {
-    document.getElementById("music").pause();
+function stopMusic(){
+    document.getElementById("m1").pause();
+    document.getElementById("m2").pause();
 }
 
-// 🎨 Drawing (works on mobile too)
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
-let drawing = false;
+// 🎨 Drawing
+const canvas=document.getElementById("canvas");
+const ctx=canvas.getContext("2d");
+let drawing=false;
 
-canvas.addEventListener("mousedown", () => drawing = true);
-canvas.addEventListener("mouseup", () => drawing = false);
-canvas.addEventListener("mousemove", draw);
-
-canvas.addEventListener("touchstart", () => drawing = true);
-canvas.addEventListener("touchend", () => drawing = false);
-canvas.addEventListener("touchmove", function(e){
-    let rect = canvas.getBoundingClientRect();
-    let x = e.touches[0].clientX - rect.left;
-    let y = e.touches[0].clientY - rect.top;
-    ctx.fillRect(x, y, 2, 2);
-});
+canvas.addEventListener("mousedown",()=>drawing=true);
+canvas.addEventListener("mouseup",()=>drawing=false);
+canvas.addEventListener("mousemove",draw);
 
 function draw(e){
     if(!drawing) return;
-    ctx.fillRect(e.offsetX, e.offsetY, 2, 2);
+    ctx.strokeStyle=document.getElementById("colorPicker").value;
+    ctx.lineWidth=document.getElementById("size").value;
+    ctx.lineTo(e.offsetX,e.offsetY);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(e.offsetX,e.offsetY);
 }
 
 function clearCanvas(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
 }
 
-// 🎮 Game
-let score = 0;
-function increaseScore(){
-    score++;
-    document.getElementById("score").innerText = score;
-}
-
-// 📩 Fake Contact Response
-function sendMessage(){
-    document.getElementById("msg").innerText = "Message sent successfully!";
+// 📩 Contact
+function sendMail(){
+    let name=document.getElementById("name").value;
+    let msg=document.getElementById("msg").value;
+    window.location.href = `mailto:?subject=Message from ${name}&body=${msg}`;
 }
 </script>
 
