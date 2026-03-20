@@ -4,43 +4,90 @@
     <title>Student Stress Management</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            background: linear-gradient(to right, #74ebd5, #ACB6E5);
             text-align: center;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .container {
             padding: 20px;
         }
-        h1 {
-            color: #2e8b57;
+
+        .card {
+            background: white;
+            margin: 15px auto;
+            padding: 20px;
+            border-radius: 15px;
+            width: 80%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
         }
-        ul {
-            list-style-type: none;
+
+        .card:hover {
+            transform: scale(1.05);
         }
-        li {
-            background: #ffffff;
-            margin: 10px;
-            padding: 10px;
-            border-radius: 8px;
+
+        h2 {
+            color: #2c3e50;
         }
+
         .tip {
+            background: #ffeaa7;
+            padding: 15px;
+            border-radius: 10px;
             margin-top: 20px;
             font-weight: bold;
-            color: #ff6347;
+        }
+
+        footer {
+            margin-top: 20px;
+            padding: 10px;
+            background: #2c3e50;
+            color: white;
         }
     </style>
 </head>
 <body>
 
-<h1>Welcome to Student Stress Management</h1>
+<header>
+    🌿 Student Stress Management
+</header>
 
-<p>This website helps students to:</p>
+<div class="container">
 
-<ul>
-    <li>Reduce stress</li>
-    <li>Stay focused</li>
-    <li>Improve study habits</li>
-</ul>
+    <div class="card">
+        <h2>📘 Reduce Stress</h2>
+        <p>Take short breaks and avoid overthinking.</p>
+    </div>
 
-<p class="tip">Tip: Take breaks, stay calm, and believe in yourself 😊</p>
+    <div class="card">
+        <h2>🎯 Stay Focused</h2>
+        <p>Create a study schedule and follow it regularly.</p>
+    </div>
+
+    <div class="card">
+        <h2>📈 Improve Study Habits</h2>
+        <p>Use active learning methods like notes and practice.</p>
+    </div>
+
+    <div class="tip">
+        🌟 Tip: Believe in yourself. You are stronger than your stress 😊
+    </div>
+
+</div>
+
+<footer>
+    Made with ❤️ by Srilatha
+</footer>
 
 </body>
 </html>
