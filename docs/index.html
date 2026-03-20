@@ -3,6 +3,7 @@
 <head>
     <title>Student Stress Management</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <style>
         body {
             margin: 0;
@@ -19,12 +20,16 @@
             color: white;
             margin: 10px;
             text-decoration: none;
+            font-weight: bold;
+        }
+        nav a:hover {
+            color: #1abc9c;
         }
 
         header {
             color: white;
             padding: 30px;
-            font-size: 28px;
+            font-size: 30px;
             animation: fadeIn 2s;
         }
 
@@ -33,18 +38,32 @@
             margin: 20px auto;
             padding: 20px;
             border-radius: 15px;
-            width: 80%;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            width: 85%;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             animation: slideUp 1s;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
         }
 
         button {
-            padding: 10px;
+            padding: 10px 20px;
             border: none;
             border-radius: 8px;
             background: #2ecc71;
             color: white;
             cursor: pointer;
+            margin-top: 10px;
+        }
+
+        input, textarea {
+            width: 80%;
+            padding: 10px;
+            margin: 8px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
         }
 
         canvas {
@@ -68,12 +87,16 @@
         }
     </style>
 </head>
+
 <body>
 
 <nav>
     <a href="#">Home</a>
     <a href="#tips">Tips</a>
     <a href="#relax">Relax</a>
+    <a href="#draw">Draw</a>
+    <a href="#game">Game</a>
+    <a href="#contact">Contact</a>
 </nav>
 
 <header>
@@ -81,28 +104,37 @@
 </header>
 
 <div class="card" id="tips">
-    <h2>📘 Tips</h2>
+    <h2>📘 Stress Relief Tips</h2>
     <p>✔ Take breaks</p>
     <p>✔ Stay organized</p>
     <p>✔ Exercise regularly</p>
 </div>
 
 <div class="card" id="relax">
-    <h2>🧘 Relax</h2>
-    <button onclick="playMusic()">Play Music 🎵</button>
+    <h2>🧘 Relax Zone</h2>
+    <button onclick="playMusic()">Play Music 🎵</button><br>
+    <button onclick="stopMusic()">Stop Music ⏹</button>
     <audio id="music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
 </div>
 
-<div class="card">
-    <h2>🎨 Draw & Relax</h2>
-    <canvas id="draw" width="300" height="300"></canvas><br><br>
+<div class="card" id="draw">
+    <h2>🎨 Drawing Board</h2>
+    <canvas id="canvas" width="300" height="300"></canvas><br>
     <button onclick="clearCanvas()">Clear</button>
 </div>
 
-<div class="card">
-    <h2>🎮 Mini Game</h2>
+<div class="card" id="game">
+    <h2>🎮 Click Game</h2>
     <p>Score: <span id="score">0</span></p>
-    <button onclick="increaseScore()">Click Me!</button>
+    <button onclick="increaseScore()">Click Fast!</button>
+</div>
+
+<div class="card" id="contact">
+    <h2>📩 Contact</h2>
+    <input type="text" placeholder="Your Name"><br>
+    <input type="email" placeholder="Your Email"><br>
+    <textarea placeholder="Your Message"></textarea><br>
+    <button>Send</button>
 </div>
 
 <footer>
@@ -110,31 +142,33 @@
 </footer>
 
 <script>
+// Music
 function playMusic() {
     document.getElementById("music").play();
 }
-
-// Drawing
-const canvas = document.getElementById("draw");
-const ctx = canvas.getContext("2d");
-let drawing = false;
-
-canvas.addEventListener("mousedown", () => drawing = true);
-canvas.addEventListener("mouseup", () => drawing = false);
-canvas.addEventListener("mousemove", draw);
-
-function draw(e) {
-    if (!drawing) return;
-    ctx.fillRect(e.offsetX, e.offsetY, 2, 2);
+function stopMusic() {
+    document.getElementById("music").pause();
 }
 
-function clearCanvas() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+// Drawing
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+let draw = false;
+
+canvas.addEventListener("mousedown", () => draw = true);
+canvas.addEventListener("mouseup", () => draw = false);
+canvas.addEventListener("mousemove", function(e){
+    if(!draw) return;
+    ctx.fillRect(e.offsetX, e.offsetY, 2, 2);
+});
+
+function clearCanvas(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
 }
 
 // Game
 let score = 0;
-function increaseScore() {
+function increaseScore(){
     score++;
     document.getElementById("score").innerText = score;
 }
