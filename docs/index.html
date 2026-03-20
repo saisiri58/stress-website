@@ -7,8 +7,8 @@
 <style>
 body {
     margin:0;
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(to right,#74ebd5,#ACB6E5);
+    font-family:'Segoe UI',sans-serif;
+    background:linear-gradient(to right,#74ebd5,#ACB6E5);
     text-align:center;
 }
 
@@ -47,9 +47,17 @@ button {
     cursor:pointer;
 }
 
+input, textarea {
+    width:80%;
+    padding:10px;
+    margin:8px;
+    border-radius:8px;
+    border:1px solid #ccc;
+}
+
 canvas {
     border:2px solid black;
-    touch-action: none;
+    touch-action:none;
 }
 
 footer {
@@ -64,19 +72,36 @@ footer {
 
 <nav>
 <a href="#tips">Tips</a>
+<a href="#relax">Relax</a>
 <a href="#draw">Draw</a>
+<a href="#contact">Contact</a>
 </nav>
 
 <header>
 🌿 Student Stress Management
 </header>
 
+<!-- Tips -->
 <div class="card" id="tips">
-<h2>Stress Tips</h2>
-<p>✔ Take breaks</p>
+<h2>📘 Stress Tips</h2>
+<p>✔ Take breaks regularly</p>
+<p>✔ Stay organized</p>
+<p>✔ Exercise daily</p>
 <p>✔ Stay positive</p>
 </div>
 
+<!-- Relax -->
+<div class="card" id="relax">
+<h2>🧘 Relax Zone</h2>
+<button onclick="playMusic(1)">Sound 1 🎵</button>
+<button onclick="playMusic(2)">Sound 2 🎵</button>
+<button onclick="stopMusic()">Stop ⏹</button>
+
+<audio id="m1" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+<audio id="m2" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"></audio>
+</div>
+
+<!-- Drawing -->
 <div class="card" id="draw">
 <h2>🎨 Drawing Board</h2>
 
@@ -89,17 +114,34 @@ footer {
 <button onclick="clearCanvas()">Clear</button>
 </div>
 
+<!-- Contact -->
+<div class="card" id="contact">
+<h2>📩 Contact</h2>
+<input id="name" placeholder="Your Name"><br>
+<textarea id="msg" placeholder="Your Message"></textarea><br>
+<button onclick="sendMail()">Send</button>
+</div>
+
 <footer>
 Made with ❤️ by Srilatha
 </footer>
 
 <script>
+// 🎵 Music
+function playMusic(n){
+    stopMusic();
+    document.getElementById("m"+n).play();
+}
+function stopMusic(){
+    document.getElementById("m1").pause();
+    document.getElementById("m2").pause();
+}
+
+// 🎨 Drawing (FINAL FIX)
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-
 let drawing = false;
 
-// Get position
 function getPos(e){
     let rect = canvas.getBoundingClientRect();
     return {
@@ -108,7 +150,6 @@ function getPos(e){
     };
 }
 
-// Start
 function start(e){
     drawing = true;
     let pos = getPos(e);
@@ -116,7 +157,6 @@ function start(e){
     ctx.moveTo(pos.x, pos.y);
 }
 
-// Draw
 function draw(e){
     if(!drawing) return;
     e.preventDefault();
@@ -131,12 +171,10 @@ function draw(e){
     ctx.stroke();
 }
 
-// Stop
 function stop(){
     drawing = false;
 }
 
-// Events (both mobile + desktop)
 canvas.addEventListener("mousedown", start);
 canvas.addEventListener("mousemove", draw);
 canvas.addEventListener("mouseup", stop);
@@ -145,11 +183,17 @@ canvas.addEventListener("touchstart", start);
 canvas.addEventListener("touchmove", draw);
 canvas.addEventListener("touchend", stop);
 
-// Clear
 function clearCanvas(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
+}
+
+// 📩 Contact
+function sendMail(){
+    let name=document.getElementById("name").value;
+    let msg=document.getElementById("msg").value;
+    window.location.href = `mailto:?subject=Message from ${name}&body=${msg}`;
 }
 </script>
 
 </body>
-</html>
+</html>poo
