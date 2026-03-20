@@ -47,16 +47,9 @@ button {
     cursor:pointer;
 }
 
-input, textarea {
-    width:80%;
-    padding:10px;
-    margin:8px;
-    border-radius:8px;
-    border:1px solid #ccc;
-}
-
 canvas {
     border:2px solid black;
+    touch-action: none;
 }
 
 footer {
@@ -71,9 +64,7 @@ footer {
 
 <nav>
 <a href="#tips">Tips</a>
-<a href="#relax">Relax</a>
 <a href="#draw">Draw</a>
-<a href="#contact">Contact</a>
 </nav>
 
 <header>
@@ -81,26 +72,15 @@ footer {
 </header>
 
 <div class="card" id="tips">
-<h2>📘 Stress Management Tips</h2>
+<h2>Stress Tips</h2>
 <p>✔ Take breaks</p>
-<p>✔ Stay organized</p>
-<p>✔ Exercise regularly</p>
-</div>
-
-<div class="card" id="relax">
-<h2>🧘 Relax Zone</h2>
-<button onclick="playMusic(1)">Sound 1</button>
-<button onclick="playMusic(2)">Sound 2</button>
-<button onclick="stopMusic()">Stop</button>
-
-<audio id="m1" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
-<audio id="m2" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"></audio>
+<p>✔ Stay positive</p>
 </div>
 
 <div class="card" id="draw">
 <h2>🎨 Drawing Board</h2>
 
-<input type="color" id="colorPicker">
+<input type="color" id="colorPicker" value="#000000">
 <input type="range" id="size" min="1" max="10" value="3">
 
 <br><br>
@@ -109,68 +89,65 @@ footer {
 <button onclick="clearCanvas()">Clear</button>
 </div>
 
-<div class="card" id="contact">
-<h2>📩 Contact</h2>
-<input id="name" placeholder="Your Name"><br>
-<textarea id="msg" placeholder="Your Message"></textarea><br>
-<button onclick="sendMail()">Send</button>
-</div>
-
 <footer>
 Made with ❤️ by Srilatha
 </footer>
 
 <script>
-// 🎵 Music
-function playMusic(n){
-    stopMusic();
-    document.getElementById("m"+n).play();
-}
-function stopMusic(){
-    document.getElementById("m1").pause();
-    document.getElementById("m2").pause();
-}
-
-// 🎨 Drawing (FIXED)
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
 let drawing = false;
 
-canvas.addEventListener("mousedown", startDraw);
-canvas.addEventListener("mouseup", stopDraw);
-canvas.addEventListener("mousemove", draw);
+// Get position
+function getPos(e){
+    let rect = canvas.getBoundingClientRect();
+    return {
+        x: (e.touches ? e.touches[0].clientX : e.clientX) - rect.left,
+        y: (e.touches ? e.touches[0].clientY : e.clientY) - rect.top
+    };
+}
 
-function startDraw(e){
+// Start
+function start(e){
     drawing = true;
+    let pos = getPos(e);
     ctx.beginPath();
-    ctx.moveTo(e.offsetX, e.offsetY);
+    ctx.moveTo(pos.x, pos.y);
 }
 
-function stopDraw(){
-    drawing = false;
-}
-
+// Draw
 function draw(e){
     if(!drawing) return;
+    e.preventDefault();
+
+    let pos = getPos(e);
 
     ctx.strokeStyle = document.getElementById("colorPicker").value;
     ctx.lineWidth = document.getElementById("size").value;
     ctx.lineCap = "round";
 
-    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.lineTo(pos.x, pos.y);
     ctx.stroke();
 }
 
-function clearCanvas(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+// Stop
+function stop(){
+    drawing = false;
 }
 
-// 📩 Contact
-function sendMail(){
-    let name=document.getElementById("name").value;
-    let msg=document.getElementById("msg").value;
-    window.location.href = `mailto:?subject=Message from ${name}&body=${msg}`;
+// Events (both mobile + desktop)
+canvas.addEventListener("mousedown", start);
+canvas.addEventListener("mousemove", draw);
+canvas.addEventListener("mouseup", stop);
+
+canvas.addEventListener("touchstart", start);
+canvas.addEventListener("touchmove", draw);
+canvas.addEventListener("touchend", stop);
+
+// Clear
+function clearCanvas(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
 }
 </script>
 
