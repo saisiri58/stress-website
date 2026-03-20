@@ -5,57 +5,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
-        body {
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
             font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(to right, #74ebd5, #ACB6E5);
-            text-align: center;
+            background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+            scroll-behavior: smooth;
         }
 
         nav {
-            background: #2c3e50;
+            background: #1e272e;
             padding: 15px;
+            position: sticky;
+            top: 0;
+            text-align: center;
         }
+
         nav a {
             color: white;
             margin: 10px;
             text-decoration: none;
             font-weight: bold;
+            transition: 0.3s;
         }
+
         nav a:hover {
-            color: #1abc9c;
+            color: #00cec9;
         }
 
         header {
+            text-align: center;
+            padding: 50px;
             color: white;
-            padding: 30px;
-            font-size: 30px;
+            font-size: 32px;
             animation: fadeIn 2s;
         }
 
         .card {
             background: white;
             margin: 20px auto;
-            padding: 20px;
+            padding: 25px;
             border-radius: 15px;
             width: 85%;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
             animation: slideUp 1s;
             transition: 0.3s;
         }
 
         .card:hover {
-            transform: scale(1.05);
+            transform: translateY(-5px) scale(1.02);
+        }
+
+        h2 {
+            margin-bottom: 10px;
         }
 
         button {
             padding: 10px 20px;
             border: none;
             border-radius: 8px;
-            background: #2ecc71;
+            background: #00b894;
             color: white;
             cursor: pointer;
             margin-top: 10px;
+        }
+
+        button:hover {
+            background: #019875;
         }
 
         input, textarea {
@@ -67,22 +87,25 @@
         }
 
         canvas {
-            border: 2px solid black;
+            border: 2px solid #333;
+            margin-top: 10px;
         }
 
         footer {
-            background: #2c3e50;
+            background: #1e272e;
             color: white;
+            text-align: center;
             padding: 10px;
         }
 
+        /* Animations */
         @keyframes fadeIn {
             from {opacity: 0;}
             to {opacity: 1;}
         }
 
         @keyframes slideUp {
-            from {transform: translateY(50px); opacity: 0;}
+            from {transform: translateY(40px); opacity: 0;}
             to {transform: translateY(0); opacity: 1;}
         }
     </style>
@@ -105,15 +128,15 @@
 
 <div class="card" id="tips">
     <h2>📘 Stress Relief Tips</h2>
-    <p>✔ Take breaks</p>
-    <p>✔ Stay organized</p>
-    <p>✔ Exercise regularly</p>
+    <p>✔ Take breaks regularly</p>
+    <p>✔ Stay organized with a schedule</p>
+    <p>✔ Exercise and stay active</p>
 </div>
 
 <div class="card" id="relax">
     <h2>🧘 Relax Zone</h2>
-    <button onclick="playMusic()">Play Music 🎵</button><br>
-    <button onclick="stopMusic()">Stop Music ⏹</button>
+    <button onclick="playMusic()">Play Music 🎵</button>
+    <button onclick="stopMusic()">Stop ⏹</button>
     <audio id="music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
 </div>
 
@@ -126,7 +149,7 @@
 <div class="card" id="game">
     <h2>🎮 Click Game</h2>
     <p>Score: <span id="score">0</span></p>
-    <button onclick="increaseScore()">Click Fast!</button>
+    <button onclick="increaseScore()">Click Me Fast!</button>
 </div>
 
 <div class="card" id="contact">
@@ -134,7 +157,8 @@
     <input type="text" placeholder="Your Name"><br>
     <input type="email" placeholder="Your Email"><br>
     <textarea placeholder="Your Message"></textarea><br>
-    <button>Send</button>
+    <button onclick="sendMessage()">Send</button>
+    <p id="msg"></p>
 </div>
 
 <footer>
@@ -142,7 +166,7 @@
 </footer>
 
 <script>
-// Music
+// 🎵 Music
 function playMusic() {
     document.getElementById("music").play();
 }
@@ -150,27 +174,43 @@ function stopMusic() {
     document.getElementById("music").pause();
 }
 
-// Drawing
+// 🎨 Drawing (works on mobile too)
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-let draw = false;
+let drawing = false;
 
-canvas.addEventListener("mousedown", () => draw = true);
-canvas.addEventListener("mouseup", () => draw = false);
-canvas.addEventListener("mousemove", function(e){
-    if(!draw) return;
-    ctx.fillRect(e.offsetX, e.offsetY, 2, 2);
+canvas.addEventListener("mousedown", () => drawing = true);
+canvas.addEventListener("mouseup", () => drawing = false);
+canvas.addEventListener("mousemove", draw);
+
+canvas.addEventListener("touchstart", () => drawing = true);
+canvas.addEventListener("touchend", () => drawing = false);
+canvas.addEventListener("touchmove", function(e){
+    let rect = canvas.getBoundingClientRect();
+    let x = e.touches[0].clientX - rect.left;
+    let y = e.touches[0].clientY - rect.top;
+    ctx.fillRect(x, y, 2, 2);
 });
+
+function draw(e){
+    if(!drawing) return;
+    ctx.fillRect(e.offsetX, e.offsetY, 2, 2);
+}
 
 function clearCanvas(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
 }
 
-// Game
+// 🎮 Game
 let score = 0;
 function increaseScore(){
     score++;
     document.getElementById("score").innerText = score;
+}
+
+// 📩 Fake Contact Response
+function sendMessage(){
+    document.getElementById("msg").innerText = "Message sent successfully!";
 }
 </script>
 
